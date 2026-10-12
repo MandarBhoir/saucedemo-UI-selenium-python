@@ -57,10 +57,6 @@ def checkout_page(driver):
 
     # Proceed to checkout
     cart_page.proceed_to_checkout()
-    print("URL after checkout click:", driver.current_url)
-    print("Page title after checkout click:", driver.title)
-    print("Heading after checkout click:",
-          driver.find_element(By.CLASS_NAME, "title").text)
 
     return CheckoutPage(driver)
 
