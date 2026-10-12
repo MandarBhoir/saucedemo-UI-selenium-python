@@ -21,3 +21,6 @@ logs/*
 
 # Environment variables and secrets
 .env
+
+allure-report/
+allure-results/

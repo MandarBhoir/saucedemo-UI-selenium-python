@@ -1,3 +1,4 @@
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -5,12 +6,23 @@ from selenium.webdriver.chrome.options import Options
 
 @pytest.fixture
 def driver():
-    """Create and clean up a Chrome WebDriver instance."""
     options = Options()
-    options.add_argument("--start-maximized")
 
-    browser = webdriver.Chrome(options=options)
+    # Use a fresh, temporary browser profile for each test.
+    options.add_argument("--incognito")
 
-    yield browser
+    # Disable Chrome password-manager services where supported.
+    options.add_experimental_option(
+        "prefs",
+        {
+            "credentials_enable_service": False,
+            "profile.password_manager_enabled": False,
+        },
+    )
 
-    browser.quit()
+    driver = webdriver.Chrome(options=options)
+    driver.maximize_window()
+
+    yield driver
+
+    driver.quit()
